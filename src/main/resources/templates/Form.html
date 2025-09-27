@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:attr="lang=${lang}">
+<head>
+    <title th:text="#{login.title}"></title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div class="login-form">
+        <h1 th:text="#{login.message}"></h1>
+        <div th:if="${error}" class="error" th:text="${error}"></div>
+        
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <input type="text" name="username" 
+                th:placeholder="#{login.username}" required>
+                <br><br>
+                <input type="text" name="password"
+                th:placeholder="#{login.password}" required>
+            </div>
+            <br>
+            <button type="submit" th:text="#{login.button}"></button>
+        </form>
+        
+    </div>
+
+
+    <div style="float: right;">
+        <a th:text="#{language.english}" href="#" onclick="changeLang('en'); return false;"></a> |
+        <a th:text="#{language.russian}" href="#" onclick="changeLang('ru'); return false;"></a>
+    </div>
+
+    <script>
+        function changeLang(lang) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('lang', lang);
+            window.location.href = url.toString();
+        }
+    </script>
+</body>
+</html>
