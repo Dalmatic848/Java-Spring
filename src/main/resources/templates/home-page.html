@@ -1,26 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" th:attr="lang=${lang}">
 <head>
-    <title th:text="#{personal.account}"></title>
+    <title th:text="#{home.title}"></title>
     <meta charset="UTF-8">
 </head>
 <body>
-    <h1 th:text="#{welcome.message} + ' ' + (${personName} ?: #{anonymous.user}) + '!'"></h1>
-    
-    
-    
-    <p th:text="#{working.message}"></p>
-    
-    
-
-
-
-
+    <a href="/datas" th:text="#{admin.dashboard}"></a>
+    <br>
+    <a href="/personal-account" th:text="#{personal.account}"></a>
+    <br>
     <div style="float: right;">
         <a th:text="#{language.english}" href="#" onclick="changeLang('en'); return false;"></a> |
         <a th:text="#{language.russian}" href="#" onclick="changeLang('ru'); return false;"></a>
     </div>
-
     <script>
         function changeLang(lang) {
             const url = new URL(window.location.href);

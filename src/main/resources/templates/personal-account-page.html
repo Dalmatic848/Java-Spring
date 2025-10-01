@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:attr="lang=${lang}">
+<head>
+    <title th:text="#{personal.account}"></title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1 th:text="#{welcome.message} + ' ' + (${personName} ?: #{anonymous.user}) + '!'"></h1>
+    <p th:text="#{working.message}"></p>
+    <div style="float: right;">
+        <a th:text="#{language.english}" href="#" onclick="changeLang('en'); return false;"></a> |
+        <a th:text="#{language.russian}" href="#" onclick="changeLang('ru'); return false;"></a>
+    </div>
+    <form th:action="@{/logout}" method="post" style="display:inline;">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit" th:text="#{logout.button}"></button>
+    </form>
+    <script>
+        function changeLang(lang) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('lang', lang);
+            window.location.href = url.toString();
+        }
+    </script>
+</body>
+</html>
