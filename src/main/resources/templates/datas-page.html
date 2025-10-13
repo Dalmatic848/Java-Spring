@@ -5,7 +5,20 @@
     <meta charset="UTF-8">
 </head>
 <body>
-
+    <h2 th:text="#{Users}"></h2>
+        <table id="usersTable" border="1" style="border-collapse: collapse;">
+            <tbody>
+                <tr th:each="user, iterStat : ${users}">
+                    <td th:text="${iterStat.index + 1}">1</td>
+                    <td th:text="${user}">Alice</td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    <input id="newUser">
+    <button id="addUserBtn" th:text="#{Add}"></button>
+    
+    <hr>
     <a href = "https://t.me/chr0mography" th:text="#{dashboard}"></a>
     <div style="float: right;">
         <a th:text="#{language.english}" href="#" onclick="changeLang('en'); return false;"></a> |
@@ -22,5 +35,48 @@
             window.location.href = url.toString();
         }
     </script>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <script>
+    document.getElementById('addUserBtn').addEventListener('click', function() {
+        const input = document.getElementById('newUser');
+        const name = input.value.trim();
+        
+        if (!name) return;
+
+        // Добавляем в таблицу
+        const tableBody = document.querySelector('#usersTable tbody');
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = tableBody.rows.length;
+        row.insertCell(1).textContent = name;
+
+        // Очищаем поле
+        input.value = '';
+
+        // Получаем CSRF-токен и имя заголовка НАДЕЖНО
+        const csrfMeta = document.querySelector("meta[name='_csrf']");
+        const csrfHeaderMeta = document.querySelector("meta[name='_csrf_header']");
+        
+        if (!csrfMeta || !csrfHeaderMeta) {
+            console.error('CSRF-метатеги не найдены!');
+            return;
+        }
+
+        const token = csrfMeta.getAttribute("content");
+        const header = csrfHeaderMeta.getAttribute("content");
+
+        // Отправляем запрос
+        fetch('/datas', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                [header]: token  // динамическое имя заголовка
+            },
+            body: JSON.stringify({ username: name })
+        })
+        .catch(err => console.error('Ошибка отправки:', err));
+    });
+    </script>
+
 </body>
 </html>

@@ -32,8 +32,5 @@ public String getLoginPage(@RequestParam(required = false) String error, Model m
     public String getHomePage() {
         return "home-page";
     }
-    @GetMapping("/datas")
-    public String getDatasPage() {
-        return "datas-page";
-    }
+    
 }

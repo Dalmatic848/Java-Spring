@@ -33,6 +33,11 @@ public class SecurityConfig  {
             .defaultSuccessUrl("/personal-account", false) // куда перенаправлять после входа
             .permitAll()
         )
+        .rememberMe(remember -> remember
+            .rememberMeCookieName("remember-me") // имя Cookie (опционально)
+            .tokenValiditySeconds(7 * 24 * 60 * 60) // 7 дней в секундах
+            .userDetailsService(userDetailsService()) // ваш бин с пользователями
+        )
         .logout(logout -> logout
             .logoutSuccessUrl("/") // после выхода — на главную
             .permitAll()
