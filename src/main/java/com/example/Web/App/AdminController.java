@@ -1,8 +1,5 @@
 package com.example.Web.App;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -16,20 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdminController {
-    private List<String> users = new ArrayList<>();
-    
-    public AdminController() {
-        // Инициализация при создании контроллера
-        users.add("Alice");
-        users.add("Bob");
-        users.add("Charlie");
+
+    private final UserService userService;
+
+    public AdminController(UserService userService) {
+        this.userService = userService;
     }
-    
+
     @GetMapping("/datas")
     public String getDatasPage(Model model) {
-         
-        model.addAttribute("users", users);
-        
+        model.addAttribute("users", userService.getAllUsers());
         return "datas-page";
     }
 
@@ -37,9 +30,7 @@ public class AdminController {
     @ResponseBody
     public void addUserData(@RequestBody Map<String, String> payload) {
         String username = payload.get("username");
+        userService.addUser(username);
         System.out.println("\n\n\n\n\nДобавлен: " + username + "\n\n\n\n");
-        // ничего не возвращаем → Spring отправит статус 200 без тела
     }
-    
-    
 }

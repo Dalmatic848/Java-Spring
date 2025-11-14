@@ -25,8 +25,8 @@
         <a th:text="#{language.russian}" href="#" onclick="changeLang('ru'); return false;"></a>
     </div>
     <form th:action="@{/logout}" method="post" style="display:inline;">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <button type="submit" th:text="#{logout.button}"></button>
+        <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit" th:text="#{logout.button}"></button> -->
     </form>
     <script>
         function changeLang(lang) {
@@ -35,8 +35,8 @@
             window.location.href = url.toString();
         }
     </script>
-    <meta name="_csrf" th:content="${_csrf.token}" />
-    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <!-- <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" /> -->
     <script>
     document.getElementById('addUserBtn').addEventListener('click', function() {
         const input = document.getElementById('newUser');
